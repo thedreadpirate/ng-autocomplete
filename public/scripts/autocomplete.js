@@ -3,7 +3,6 @@ directive('ngAutocomplete', function(){
 	return {
 		restrict: 'EA',
 		scope: {
-			ngModel: '=',
 			onSelect: '&',
 			retrievalMethod: '&'
 		},
@@ -17,11 +16,21 @@ directive('ngAutocomplete', function(){
 				}
 			});
 
+			var valueProperty = attrs.valueproperty;
+
 			scope.itemSelected = function(item){
 				scope.onSelect()(item);
 			}
+
+			scope.getItemTemplate = function(item){
+				if(valueProperty != undefined){
+					return item[valueProperty];
+				}else{
+					return item;
+				}
+			};
 		},
 		template: '<div><input type="text" ng-model="ngModel" />' +
-		'<div ng-click="itemSelected(item)" ng-repeat="item in items">{{item}}</div>'
+		'<div ng-click="itemSelected(item)" ng-repeat="item in items">{{getItemTemplate(item)}}</div>'
 	};	
 });

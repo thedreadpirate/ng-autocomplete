@@ -5,6 +5,8 @@
 		<script type="text/javascript" src="/scripts/index.js"></script>
 	</head>
 	<body ng-app="acSample" ng-controller="indexCtrl">
-		<ng-autocomplete ng-model="test" on-select="selected" retrieval-method="getOptions"></ng-autocomplete>
+		<ng-autocomplete on-select="selected" retrieval-method="getOptions" valueproperty="text"></ng-autocomplete>
+
+		<ng-autocomplete on-select="selected" retrieval-method="getSimple"></ng-autocomplete>
 	</body>
 </html>
