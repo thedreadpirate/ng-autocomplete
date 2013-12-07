@@ -3,11 +3,26 @@ var app = angular.module('acSample', ['ngAutocompleteModule']);
 app.factory('listService', function($q, $timeout){
 	return {
 		getList: function(count){
-			var all  = [{text: 'hello', key: 1}, 
-						{text: 'a', key: 2}, 
-						{text: 'bunch', key:3}, 
-						{text: 'of', key: 4},
-						{text: 'things', key: 5}
+			var all  = [{text: 'text 1', key: 1}, 
+						{text: 'text 2', key: 2}, 
+						{text: 'text 3', key: 3}, 
+						{text: 'text 4', key: 4},
+						{text: 'text 5', key: 5},
+						{text: 'text 6', key: 6}, 
+						{text: 'text 7', key: 7}, 
+						{text: 'text 8', key: 8},
+						{text: 'text 9', key: 9},
+						{text: 'text 10', key: 10}, 
+						{text: 'text 11', key: 11}, 
+						{text: 'text 12', key: 12},
+						{text: 'text 13', key: 13},
+						{text: 'text 14', key: 14}, 
+						{text: 'text 15', key: 15}, 
+						{text: 'text 16', key: 16},
+						{text: 'text 17', key: 17},
+						{text: 'text 18', key: 18},
+						{text: 'text 19', key: 19},
+						{text: 'text 20', key: 20}
 						];	
 			var deferred = $q.defer();
 			$timeout(function(){

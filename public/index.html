@@ -20,8 +20,8 @@
 			<ng-autocomplete on-select="selected" retrieval-method="getOptions"></ng-autocomplete>
 		</fieldset>
 		<fieldset>
-			<legend>Specify property of complex object</legend>
-			<ng-autocomplete on-select="selected" retrieval-method="getOptions" value-property="text"></ng-autocomplete>
+			<legend>Specify property of complex object, also require minimum of 2 characters</legend>
+			<ng-autocomplete on-select="selected" retrieval-method="getOptions" value-property="text" min-length="2"></ng-autocomplete>
 		</fieldset>
 		<fieldset>
 			<legend>Custom logic (will be evaled, probably not secure)</legend>
