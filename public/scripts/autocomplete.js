@@ -1,5 +1,5 @@
 angular.module('ngAutocompleteModule', []).
-directive('ngAutocomplete', function(){
+directive('ngAutocomplete', function($templateCache){
 	return {
 		restrict: 'EA',
 		scope: {

@@ -11,6 +11,9 @@
 		</style>
 	</head>
 	<body ng-app="acSample" ng-controller="indexCtrl">
+        <script type="text/ng-template" id="templateId.html">
+            this is the content of the template
+        </script>
 		<fieldset>
 			<legend>Default behavior simple object</legend>
 			<ng-autocomplete on-select="selected" retrieval-method="getSimple"></ng-autocomplete>
