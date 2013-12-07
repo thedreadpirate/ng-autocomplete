@@ -3,10 +3,29 @@
 		<script type="text/javascript" src="/scripts/angular.min.js"></script>
 		<script type="text/javascript" src="/scripts/autocomplete.js"></script>
 		<script type="text/javascript" src="/scripts/index.js"></script>
+		<style>
+			.ac-items{
+				background-color: whitesmoke;
+				color: gray;
+			}
+		</style>
 	</head>
 	<body ng-app="acSample" ng-controller="indexCtrl">
-		<ng-autocomplete on-select="selected" retrieval-method="getOptions" valueproperty="text"></ng-autocomplete>
-
-		<ng-autocomplete on-select="selected" retrieval-method="getSimple"></ng-autocomplete>
+		<fieldset>
+			<legend>Default behavior simple object</legend>
+			<ng-autocomplete on-select="selected" retrieval-method="getSimple"></ng-autocomplete>
+		</fieldset>
+		<fieldset>
+			<legend>Default behavior complex object</legend>
+			<ng-autocomplete on-select="selected" retrieval-method="getOptions"></ng-autocomplete>
+		</fieldset>
+		<fieldset>
+			<legend>Specify property of complex object</legend>
+			<ng-autocomplete on-select="selected" retrieval-method="getOptions" value-property="text"></ng-autocomplete>
+		</fieldset>
+		<fieldset>
+			<legend>Custom logic (will be evaled, probably not secure)</legend>
+			<ng-autocomplete on-select="selected" retrieval-method="getOptions" advanced-display="item['key'] + ': ' + item['text']"></ng-autocomplete>
+		</fieldset>
 	</body>
 </html>
