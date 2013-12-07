@@ -11,7 +11,7 @@ directive('ngAutocomplete', function(){
 			var value_property = attrs.valueProperty;
 			var advanced_display = attrs.advancedDisplay;
 			var max_results = attrs.maxResults;
-			var min_length = attrs.minLength || 1;
+			var min_length = parseInt(attrs.minLength) || 1;
 
 			var retrieve_list = function(newVal, oldVal){
 				return !(oldVal == undefined && newVal == undefined)
