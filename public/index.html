@@ -8,24 +8,38 @@
 				background-color: whitesmoke;
 				color: gray;
 			}
+            .bigger{
+                width:600px;
+            }
+            .smaller{
+                width: 200px;
+            }
 		</style>
 	</head>
 	<body ng-app="acSample" ng-controller="indexCtrl">
+        <script type="text/ng-template" id="templateId.html">
+            <div>
+					Template: {{ item.text }}
+			</div>
+		</script>
 		<fieldset>
 			<legend>Default behavior simple object</legend>
-			<ng-autocomplete on-select="selected" retrieval-method="getSimple"></ng-autocomplete>
+			<ng-autocomplete class="smaller" on-select="selected" retrieval-method="getSimple"></ng-autocomplete>
 		</fieldset>
 		<fieldset>
 			<legend>Default behavior complex object</legend>
-			<ng-autocomplete on-select="selected" retrieval-method="getOptions"></ng-autocomplete>
+			<ng-autocomplete class="bigger" on-select="selected" retrieval-method="getOptions"></ng-autocomplete>
 		</fieldset>
 		<fieldset>
 			<legend>Specify property of complex object, also require minimum of 2 characters</legend>
-			<ng-autocomplete on-select="selected" retrieval-method="getOptions" value-property="text" min-length="2"></ng-autocomplete>
+			<ng-autocomplete class="bigger" on-select="selected" retrieval-method="getOptions" value-property="text" min-length="2"></ng-autocomplete>
 		</fieldset>
 		<fieldset>
 			<legend>Custom logic (will be evaled, probably not secure)</legend>
-			<ng-autocomplete on-select="selected" retrieval-method="getOptions" advanced-display="item['key'] + ': ' + item['text']"></ng-autocomplete>
+			<ng-autocomplete class="bigger" on-select="selected" retrieval-method="getOptions" advanced-display="templateId.html"></ng-autocomplete>
 		</fieldset>
+
+
+        Selected item: {{ selectedItem }}
 	</body>
 </html>
