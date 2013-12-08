@@ -7,16 +7,16 @@
 			.ac-items{
 				background-color: whitesmoke;
 				color: gray;
+                position: absolute;
+                z-index: 1000;
 			}
 		</style>
 	</head>
 	<body ng-app="acSample" ng-controller="indexCtrl">
         <script type="text/ng-template" id="templateId.html">
-			<div class="ac-items">
-				<div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">
+            <div>
 					Template: {{ item.text }}
-				</div>
-			</div>        
+			</div>
 		</script>
 		<fieldset>
 			<legend>Default behavior simple object</legend>

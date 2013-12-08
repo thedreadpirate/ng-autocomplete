@@ -12,10 +12,25 @@ directive('ngAutocomplete', function($templateCache, $compile){
             var advanced_display = attrs.advancedDisplay;
             var max_results = attrs.maxResults;
             var min_length = parseInt(attrs.minLength) || 1;
+            var width = '400px';
 
-            var base_template = '<div class="ac-wrapper"><input type="text" ng-model="ngModel" />#TEMPLATE#</div>';
-            var simple_template = '<div class="ac-items"><div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">{{ item }}</div></div>';
-            var property_template = '<div class="ac-items"><div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">{{ item["' + value_property + '"] }}</div></div>';
+            scope.getTemplate = function(){
+                if(value_property != undefined){
+                    return '{{ item["' + value_property + '"] }}';
+                }else if(advanced_display != undefined){
+                    return $templateCache.get(advanced_display);
+                }else{
+                    return '{{ item }}';
+                }
+            };
+
+            var base_template = '<div class="ac-wrapper"><input type="text" ng-model="ngModel" />' +
+                                '    <div class="ac-items">' +
+                                '       <div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">' +
+                                            scope.getTemplate() +
+                                '        </div>' +
+                                '    </div>' +
+                                '</div>';
 
 			var retrieve_list = function(newVal, oldVal){
 				return !(oldVal == undefined && newVal == undefined)
@@ -37,15 +52,6 @@ directive('ngAutocomplete', function($templateCache, $compile){
 				scope.onSelect()(item);
 			}
 
-			scope.getTemplate = function(){
-				if(value_property != undefined){
-					return property_template;
-				}else if(advanced_display != undefined){
-					return $templateCache.get(advanced_display);
-				}else{
-					return simple_template;
-				}
-			};
             element.html(base_template.replace('#TEMPLATE#', scope.getTemplate()).trim());
             $compile(element.contents())(scope);
 
