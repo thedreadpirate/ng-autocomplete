@@ -28,7 +28,7 @@ directive('ngAutocomplete', function($templateCache, $compile){
                 scope.items = [];
             }
 
-            var base_template = '<div class="ac-wrapper">' +
+            var base_template = '<div class="ac-wrapper" style="width:inherit">' +
                                 '    <input type="text" style="width:inherit" ng-model="ngModel" ng-blur="onBlur()" />' +
                                 '    <div class="ac-items" style="width:inherit">' +
                                 '       <div class="ac-item" style="width:inherit" ng-click="itemSelected(item)" ng-repeat="item in items">' +
