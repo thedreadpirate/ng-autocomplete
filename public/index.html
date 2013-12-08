@@ -12,8 +12,12 @@
 	</head>
 	<body ng-app="acSample" ng-controller="indexCtrl">
         <script type="text/ng-template" id="templateId.html">
-            <div>this is the content of the {{ item }}</div>
-        </script>
+			<div class="ac-items">
+				<div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">
+					Template: {{ item.text }}
+				</div>
+			</div>        
+		</script>
 		<fieldset>
 			<legend>Default behavior simple object</legend>
 			<ng-autocomplete on-select="selected" retrieval-method="getSimple"></ng-autocomplete>
