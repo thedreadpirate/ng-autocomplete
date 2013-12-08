@@ -45,7 +45,7 @@ app.controller('indexCtrl', function($scope, listService){
 	$scope.items = ['one', 'two', 'three'];
 
 	$scope.selected = function(item){
-		alert(item);
+        $scope.selectedItem = item;
 	}
 
 	$scope.getOptions = function(count){

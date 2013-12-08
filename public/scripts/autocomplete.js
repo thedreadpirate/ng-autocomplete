@@ -1,5 +1,5 @@
 angular.module('ngAutocompleteModule', []).
-directive('ngAutocomplete', function($templateCache, $compile){
+directive('ngAutocomplete', function($templateCache, $compile, $timeout){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -12,7 +12,6 @@ directive('ngAutocomplete', function($templateCache, $compile){
             var advanced_display = attrs.advancedDisplay;
             var max_results = attrs.maxResults;
             var min_length = parseInt(attrs.minLength) || 1;
-            var width = '400px';
 
             scope.getTemplate = function(){
                 if(value_property != undefined){
@@ -25,37 +24,45 @@ directive('ngAutocomplete', function($templateCache, $compile){
             };
 
             scope.onBlur = function(){
-                scope.items = [];
+                $timeout(function(){
+                    scope.focussed = false;
+                }, 50);
+            }
+
+            scope.onFocus = function(){
+                scope.focussed = true;
+            }
+
+            var retrieve_list = function(newVal, oldVal){
+                return !(oldVal == undefined && newVal == undefined)
+                    && newVal !== '' && newVal.length >= min_length;
+            }
+
+
+            scope.$watch('ngModel', function(newVal, oldVal) {
+                if(retrieve_list(newVal, oldVal)){
+                    scope.retrievalMethod()(scope.ngModel, max_results)
+                        .then(function(data){
+                            scope.items = data;
+                        });
+                }else{
+                    scope.items = [];
+                }
+            });
+
+            scope.itemSelected = function(item){
+                scope.onSelect()(item);
             }
 
             var base_template = '<div class="ac-wrapper" style="width:inherit">' +
-                                '    <input type="text" style="width:inherit" ng-model="ngModel" ng-blur="onBlur()" />' +
-                                '    <div class="ac-items" style="width:inherit">' +
+                                '    <input type="text" style="width:inherit" ng-model="ngModel" ng-blur="onBlur()" ng-focus="onFocus()" />' +
+                                '    <div class="ac-items" style="width:inherit" ng-show="focussed">' +
                                 '       <div class="ac-item" style="width:inherit" ng-click="itemSelected(item)" ng-repeat="item in items">' +
                                             scope.getTemplate() +
                                 '        </div>' +
                                 '    </div>' +
                                 '</div>';
 
-			var retrieve_list = function(newVal, oldVal){
-				return !(oldVal == undefined && newVal == undefined)
-					&& newVal !== '' && newVal.length >= min_length;
-			}
-
-			scope.$watch('ngModel', function(newVal, oldVal) {
-				if(retrieve_list(newVal, oldVal)){
-					scope.retrievalMethod()(scope.ngModel, max_results)
-					.then(function(data){
-						scope.items = data;
-					});
-				}else{
-					scope.items = [];
-				}
-			});
-
-			scope.itemSelected = function(item){
-				scope.onSelect()(item);
-			}
 
             element.html(base_template.replace('#TEMPLATE#', scope.getTemplate()).trim());
             $compile(element.contents())(scope);
