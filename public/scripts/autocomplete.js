@@ -24,9 +24,10 @@ directive('ngAutocomplete', function($templateCache, $compile){
                 }
             };
 
-            var base_template = '<div class="ac-wrapper"><input type="text" ng-model="ngModel" />' +
-                                '    <div class="ac-items">' +
-                                '       <div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">' +
+            var base_template = '<div class="ac-wrapper">' +
+                                '    <input type="text" style="width:inherit" ng-model="ngModel" />' +
+                                '    <div class="ac-items" style="width:inherit">' +
+                                '       <div class="ac-item" style="width:inherit" ng-click="itemSelected(item)" ng-repeat="item in items">' +
                                             scope.getTemplate() +
                                 '        </div>' +
                                 '    </div>' +
