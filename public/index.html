@@ -12,7 +12,7 @@
 	</head>
 	<body ng-app="acSample" ng-controller="indexCtrl">
         <script type="text/ng-template" id="templateId.html">
-            this is the content of the template
+            <div>this is the content of the {{ item }}</div>
         </script>
 		<fieldset>
 			<legend>Default behavior simple object</legend>
@@ -28,7 +28,7 @@
 		</fieldset>
 		<fieldset>
 			<legend>Custom logic (will be evaled, probably not secure)</legend>
-			<ng-autocomplete on-select="selected" retrieval-method="getOptions" advanced-display="item['key'] + ': ' + item['text']"></ng-autocomplete>
+			<ng-autocomplete on-select="selected" retrieval-method="getOptions" advanced-display="templateId.html"></ng-autocomplete>
 		</fieldset>
 	</body>
 </html>

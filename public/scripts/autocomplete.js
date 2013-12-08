@@ -1,17 +1,22 @@
 angular.module('ngAutocompleteModule', []).
-directive('ngAutocomplete', function($templateCache){
+directive('ngAutocomplete', function($templateCache, $compile){
 	return {
 		restrict: 'EA',
 		scope: {
 			onSelect: '&',
 			retrievalMethod: '&'
 		},
-		link: function(scope, something, attrs){
+		link: function(scope, element, attrs){
 
-			var value_property = attrs.valueProperty;
-			var advanced_display = attrs.advancedDisplay;
-			var max_results = attrs.maxResults;
-			var min_length = parseInt(attrs.minLength) || 1;
+            var value_property = attrs.valueProperty;
+            var advanced_display = attrs.advancedDisplay;
+            var max_results = attrs.maxResults;
+            var min_length = parseInt(attrs.minLength) || 1;
+
+            var simple_template = '<div class="ac-wrapper"><input type="text" ng-model="ngModel" />' +
+		        '<div class="ac-items"><div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">{{ item }}</div></div></div>';
+            var property_template = '<div class="ac-wrapper"><input type="text" ng-model="ngModel" />' +
+		        '<div class="ac-items"><div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">{{ item[' + scope.value_property + '] }}</div></div></div>';
 
 			var retrieve_list = function(newVal, oldVal){
 				return !(oldVal == undefined && newVal == undefined)
@@ -33,17 +38,19 @@ directive('ngAutocomplete', function($templateCache){
 				scope.onSelect()(item);
 			}
 
-			scope.getItemTemplate = function(item){
+			scope.getTemplate = function(){
 				if(value_property != undefined){
-					return item[value_property];
+					return property_template;
 				}else if(advanced_display != undefined){
-					return eval(advanced_display);
+                    scope.item = item;
+					return '';
 				}else{
-					return item;
+					return simple_template;
 				}
 			};
-		},
-		template: '<div class="ac-wrapper"><input type="text" ng-model="ngModel" />' +
-		'<div class="ac-items"><div class="ac-item" ng-click="itemSelected(item)" ng-repeat="item in items">{{getItemTemplate(item)}}</div>'
-	};	
+            element.html(scope.getTemplate());
+            $compile(element.contents())(scope);
+
+		}
+	};
 });
