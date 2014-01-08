@@ -25,7 +25,7 @@
 	<body ng-app="acSample" ng-controller="indexCtrl">
         <script type="text/ng-template" id="templateId.html">
             <div>
-					Template: {{ item.text }}
+					Example: {{ item.text }}, {{ item.key }}
 			</div>
 		</script>
 		<fieldset>
@@ -38,11 +38,19 @@
 		</fieldset>
 		<fieldset>
 			<legend>Specify property of complex object, also require minimum of 2 characters</legend>
-			<ng-autocomplete class="bigger" on-select="selected" retrieval-method="getOptions" value-property="text" min-length="2"></ng-autocomplete>
+			<ng-autocomplete class="bigger" on-select="selected" retrieval-method="getOptions" display-property="text" min-length="2"></ng-autocomplete>
 		</fieldset>
 		<fieldset>
-			<legend>Custom logic (will be evaled, probably not secure)</legend>
+			<legend>Custom template</legend>
 			<ng-autocomplete class="bigger" on-select="selected" retrieval-method="getOptions" advanced-display="templateId.html"></ng-autocomplete>
+		</fieldset>
+		<fieldset>
+			<legend>Custom template (embedded in directive)</legend>
+			<ng-autocomplete class="bigger" on-select="selected" retrieval-method="getOptions">
+	            <div class="template">
+						Inline Template: {{ item.text }}, {{ item.key }}
+				</div>
+			</ng-autocomplete>
 		</fieldset>
 
 

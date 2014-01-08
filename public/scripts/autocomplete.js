@@ -8,16 +8,21 @@ directive('ngAutocomplete', function($templateCache, $compile, $timeout){
 		},
 		link: function(scope, element, attrs){
 
-            var value_property = attrs.valueProperty;
+            var display_property = attrs.displayProperty;
             var advanced_display = attrs.advancedDisplay;
             var max_results = attrs.maxResults;
             var min_length = parseInt(attrs.minLength) || 1;
 
+            var embedded_template_element = element[0].querySelector('.template');
+            var embedded_template = embedded_template_element != null ? embedded_template_element.innerHTML : null;
+
             scope.getTemplate = function(){
-                if(value_property != undefined){
-                    return '{{ item["' + value_property + '"] }}';
+                if(display_property != undefined){
+                    return '{{ item["' + display_property + '"] }}';
                 }else if(advanced_display != undefined){
                     return $templateCache.get(advanced_display);
+                }else if(embedded_template != null){
+                    return embedded_template;
                 }else{
                     return '{{ item }}';
                 }
@@ -25,12 +30,12 @@ directive('ngAutocomplete', function($templateCache, $compile, $timeout){
 
             scope.onBlur = function(){
                 $timeout(function(){
-                    scope.focussed = false;
+                    scope.focused = false;
                 }, 200);
             }
 
             scope.onFocus = function(){
-                scope.focussed = true;
+                scope.focused = true;
             }
 
             var retrieve_list = function(newVal, oldVal){
@@ -56,7 +61,7 @@ directive('ngAutocomplete', function($templateCache, $compile, $timeout){
 
             var base_template = '<div class="ac-wrapper" style="width:inherit">' +
                                 '    <input type="text" style="width:inherit" ng-model="ngModel" ng-blur="onBlur()" ng-focus="onFocus()" />' +
-                                '    <div class="ac-items" style="width:inherit; position: absolute; z-index: 1000;" ng-show="focussed">' +
+                                '    <div class="ac-items" style="width:inherit; position: absolute; z-index: 1000;" ng-show="focused">' +
                                 '       <div class="ac-item" style="width:inherit" ng-click="itemSelected(item)" ng-repeat="item in items">' +
                                             scope.getTemplate() +
                                 '        </div>' +
